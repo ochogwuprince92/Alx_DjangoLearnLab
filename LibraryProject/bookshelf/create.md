@@ -1,6 +1,5 @@
-Database Operations: Perform and document each CRUD operation in the Django shell. Save your commands and their outputs in a file named CRUD_operations.md.
 
-#Expected Output
+new_book = Book.objects.create(title="1984", author="George Orwell", publication_year=1949)
+
+#Output
 1984
-
-

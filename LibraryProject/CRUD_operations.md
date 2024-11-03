@@ -2,8 +2,6 @@
 
 This document provides an overview of the CRUD operations performed on the Book model in the Django application.
 
-## 1. Create Operation
-
 ### Command
 ```python
 # Creating a new Book instance
