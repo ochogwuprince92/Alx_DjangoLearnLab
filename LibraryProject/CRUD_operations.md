@@ -1,8 +1,5 @@
-# CRUD Operations Documentation
+<!-- This document provides an overview of the CRUD operations performed on the Book model in the Django application. -->
 
-This document provides an overview of the CRUD operations performed on the Book model in the Django application.
-
-### Command
 ```python
 # Creating a new Book instance
 new_book = Book.objects.create(title="1984", author="George Orwell", publication_year=1949)

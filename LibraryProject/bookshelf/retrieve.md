@@ -1,9 +1,3 @@
-
-### **2. retrieve.md**
-```markdown
-# Retrieve Operation
-
-## Command
 ```python
 # Retrieving books with the title "1984"
 retrieved_books = Book.objects.filter(title="1984")

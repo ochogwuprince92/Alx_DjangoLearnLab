@@ -1,9 +1,4 @@
 
-### **3. update.md**
-```markdown
-# Update Operation
-
-## Command
 ```python
 # Updating the title of the book from "1984" to "Nineteen Eighty-Four"
 book_to_update = Book.objects.get(title="1984")

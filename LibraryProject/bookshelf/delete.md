@@ -1,9 +1,3 @@
-
-### **4. delete.md**
-```markdown
-# Delete Operation
-
-## Command
 ```python
 # Deleting the book with the title "Nineteen Eighty-Four"
 book_to_delete = Book.objects.filter(title="Nineteen Eighty-Four").first()
