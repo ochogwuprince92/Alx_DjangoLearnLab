@@ -10,17 +10,18 @@ from .models import UserProfile
 from django.contrib.auth.decorators import permission_required
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Book
-from .forms import BookForm  # Assuming you have a form for Book
+from .forms import BookForm 
 
 # Function-based view to list all books
 def list_books(request):
     books = Book.objects.all()  # Retrieve all books from the database
-    return render(request, 'relationship_app/list_books.html', {'books': books})  # Full path for the template
+    return render(request, 'relationship_app/list_books.html', {'books': books})
 
+from .models import Library
 # Class-based view for library details
 class LibraryDetailView(DetailView):
     model = Library
-    template_name = 'relationship_app/library_detail.html'  # Full path for the template
+    template_name = 'relationship_app/library_detail.html' 
     context_object_name = 'library'
 
 # User registration view
