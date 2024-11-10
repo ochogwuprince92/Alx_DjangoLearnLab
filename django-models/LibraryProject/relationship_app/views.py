@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.views.generic import DetailView
 from .models import Library  # Import both Book and Library models
 from .models import Book
+
 # Function-based view to list all books
 def list_books(request):
     books = Book.objects.all()  # Retrieve all books from the database
