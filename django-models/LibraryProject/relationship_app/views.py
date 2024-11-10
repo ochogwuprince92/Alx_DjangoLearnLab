@@ -3,7 +3,7 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.views.generic import DetailView
 from django.views import View
-from .models import Book, Library
+from .models import Library, Book
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render
 from .models import UserProfile
@@ -17,7 +17,6 @@ def list_books(request):
     books = Book.objects.all()  # Retrieve all books from the database
     return render(request, 'relationship_app/list_books.html', {'books': books})
 
-from .models import Library
 # Class-based view for library details
 class LibraryDetailView(DetailView):
     model = Library
