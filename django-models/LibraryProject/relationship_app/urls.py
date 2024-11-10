@@ -2,7 +2,7 @@
 from django.urls import path
 from django.contrib.auth.views import LoginView, LogoutView
 from . import views
-
+from .views import list_books
 urlpatterns = [
     # Function-based view for book listing
     path('books/', views.list_books, name='list_books'),
