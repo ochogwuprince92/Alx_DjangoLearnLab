@@ -23,9 +23,29 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-4on(kwmp)z_hn2@@znu264u(_fkm3k9z=s&26k&j6^ctb++s91'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+# Add extra browser-side protections for XSS and other attacks
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'DENY'  # Prevent clickjacking
+SECURE_CONTENT_TYPE_NOSNIFF = True  # Prevent browsers from interpreting files as something else
+
+# Ensure cookies are only sent over HTTPS (set to True if using HTTPS)
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+SECURE_HSTS_SECONDS = 31536000  # One year in seconds
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+
+CSP_DEFAULT_SRC = ("'self'",)
+CSP_SCRIPT_SRC = ("'self'", 'trusted-cdn.com')  # Allow only trusted script sources
+CSP_STYLE_SRC = ("'self'", 'trusted-cdn.com')  # Allow only trusted style sources
+CSP_IMG_SRC = ("'self'", 'trusted-image-cdn.com')  # Allow trusted image sources
+
+
 
 
 # Application definition
@@ -48,6 +68,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
+    'csp.middleware.CSPMiddleware',  
+
 ]
 
 ROOT_URLCONF = 'LibraryProject.urls'
