@@ -51,3 +51,17 @@ def create_book(request):
 def book_list(request):
     books = Book.objects.all()
     return render(request, 'bookshelf/book_list.html', {'books': books})
+
+from django.shortcuts import render
+from .forms import ExampleForm  # Ensure this import is correct
+
+def example_view(request):
+    if request.method == 'POST':
+        form = ExampleForm(request.POST)
+        if form.is_valid():
+            # Process form data (e.g., save to the database)
+            pass
+    else:
+        form = ExampleForm()
+
+    return render(request, 'bookshelf/form_example.html', {'form': form})
