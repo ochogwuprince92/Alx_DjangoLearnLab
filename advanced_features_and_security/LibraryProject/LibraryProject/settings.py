@@ -26,6 +26,7 @@ SECRET_KEY = 'django-insecure-4on(kwmp)z_hn2@@znu264u(_fkm3k9z=s&26k&j6^ctb++s91
 DEBUG = False
 
 # Add extra browser-side protections for XSS and other attacks
+SECURE_SSL_REDIRECT = True 
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'  # Prevent clickjacking
 SECURE_CONTENT_TYPE_NOSNIFF = True  # Prevent browsers from interpreting files as something else
