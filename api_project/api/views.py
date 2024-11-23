@@ -9,7 +9,7 @@ class BookList(generics.ListAPIView):
     serializer_class = BookSerializer
 
 # create a viewsets class
-class BookViewset(viewsets.ModelViewSet):
+class BookViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
 # Create your views here.
