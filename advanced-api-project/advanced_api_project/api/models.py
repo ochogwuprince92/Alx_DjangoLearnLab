@@ -15,8 +15,4 @@ class Book(models.Model):
         return self.title
 
 
-
-# Create your models here.
-
-
 # Create your models here.
