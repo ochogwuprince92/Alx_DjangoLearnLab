@@ -42,11 +42,11 @@ class BookUpdateView(generics.UpdateAPIView):
         if book.status == 'published':  # Adjust based on your model's status field
             raise serializers.ValidationError("Cannot update a published book.")
         serializer.save()
-    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]  # Only owner or authenticated users
+    permission_classes = [IsAuthenticated,]  # Only owner or authenticated users
 
 
 # DeleteView to remove a book
 class BookDeleteView(generics.DestroyAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]  # Only owner or authenticated users can delete books
+    permission_classes = [IsAuthenticated,]  # Only owner or authenticated users can delete books
