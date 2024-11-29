@@ -1,19 +1,19 @@
 from rest_framework import generics, serializers
 from .models import Book
 from .serializers import BookSerializer
-from rest_framework.permissions import IsAuthenticated, IsOwnerOrReadOnly
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 
 # ListView to retrieve all books
-class BookListView(generics.ListCreateAPIView):
+class BookListView(generics.ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = []  # No authentication required for list view
+    permission_classes = [IsAuthenticatedOrReadOnly] # Read-only for unauthenticated users 
 
 # DetailView to retrieve a single book by ID
-class BookDetailView(generics.RetrieveUpdateDestroyAPIView):
+class BookDetailView(generics.RetrieveAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = []
+    permission_classes = [IsAuthenticatedOrReadOnly]  # Read-only for unauthenticated users
 
 # CreateView to add a new book
 class BookCreateView(generics.CreateAPIView):
