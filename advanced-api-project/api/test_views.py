@@ -1,3 +1,7 @@
+from rest_framework import status
+from rest_framework.test import APITestCase
+from .models import Book, Author
+
 class BookAPITests(APITestCase):
     def setUp(self):
         self.author = Author.objects.create(name="Test Author")
