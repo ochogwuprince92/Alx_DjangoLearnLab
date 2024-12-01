@@ -3,7 +3,8 @@ from .models import Book
 from .serializers import BookSerializer
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from django_filters import rest_framework as DjangoFilterBackend
-from rest_framework.filters import OrderingFilter, SearchFilter,
+from rest_framework.filters import SearchFilter
+from rest_framework import filters
 
 # ListView to retrieve all books    
 class BookListView(generics.ListAPIView):
@@ -13,7 +14,7 @@ class BookListView(generics.ListAPIView):
     # Add filtering, searrching and ordering features
     filter_backends = [
         DjangoFilterBackend,
-        OrderingFilter,
+        filters.OrderingFilter,
         SearchFilter
         
     ]
