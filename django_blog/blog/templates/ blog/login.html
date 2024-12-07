@@ -1,10 +1,6 @@
-{% extends 'blog/base.html' %}
-
-{% block title %}Login{% endblock%}
-<h2>Login</h2>
-<from method= "post">
+{% load static %}
+<form method="POST">
     {% csrf_token %}
-    {{form.as_p}}
+    {{ form.as_p }}
     <button type="submit">Login</button>
 </form>
-{% endblock %}
