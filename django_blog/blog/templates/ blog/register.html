@@ -1,7 +1,10 @@
-{% load static %}
-<link rel="stylesheet" href="{% static 'styles.css' %}">
-<form method="POST">
+{%  load static %}
+
+{% block content %}
+<h2>Register</h2>
+<form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Register</button>
 </form>
+{% endblock %}

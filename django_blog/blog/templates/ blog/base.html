@@ -14,14 +14,12 @@
                 <li><a href="{% url 'home' %}">Home</a></li>
                 <li><a href="{% url 'posts' %}">Blog Posts</a></li>
                 {% if user.is_authenticated %}
-                    <li><a href = "{% url 'profile'%}">Profile</></li>
-                    <li><a href = "{% url 'logout'%}">logout</></li>
+                    <li><a href="{% url 'profile' %}">Profile</a></li>
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
                 {% else %}
-                <li><a href = "{% url 'login'%}">Login</></li>
-                <li><a href = "{% url 'register'%}">Register</></li>
-                <li><a href="{% url 'login' %}">Login</a></li>
-                <li><a href="{% url 'register' %}">Register</a></li>
-                {% end if %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'register' %}">Register</a></li>
+                {% endif %}
             </ul>
         </nav>
     </header>
