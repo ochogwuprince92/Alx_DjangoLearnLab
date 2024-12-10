@@ -12,15 +12,15 @@ def register_view(request):
             return redirect("profile")
     else:
         form = CustomUserCreationForm()
-    return render(request, "register.html", {"form": form})
+    return render(request, "blog/register.html", {"form": form})
 
 @login_required
 def profile_view(request):
-    return render(request, "profile.html")
+    return render(request, "blog/profile.html")
 
 def home(request):
-    return render(request, 'home.html')
+    return render(request, 'blog/home.html')
 
 def post(request):
-    return render(request, 'post.html')
+    return render(request, 'blog/post.html')
     
