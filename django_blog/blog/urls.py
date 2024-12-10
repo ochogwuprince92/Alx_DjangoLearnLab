@@ -10,10 +10,11 @@ urlpatterns = [
     path("home/", views.home, name= "home"),
     path("post/", views.post, name= "posts"),
     
-    path('', views.PostListView.as_view(), name='posts'),
-    path('post/<int:pk>/', views.PostDetailView.as_view(), name='post_detail'),
-    path('post/new/', views.PostCreateView.as_view(), name='post_create'),
-    path('post/<int:pk>/edit/', views.PostUpdateView.as_view(), name='post_edit'),
-    path('post/<int:pk>/delete/', views.PostDeleteView.as_view(), name='post_delete'),
-
+    path('', views.PostListView.as_view(), name='post_list'),  # Example list view
+    path('post/<int:pk>/', views.PostDetailView.as_view(), name='post_detail'),  # Detail view
+    path('post/new/', views.PostCreateView.as_view(), name='post_create'),  # Create view
+    path('post/<int:pk>/update/', views.PostUpdateView.as_view(), name='post_update'),  # Update view
+    path('post/<int:pk>/delete/', views.PostDeleteView.as_view(), name='post_delete'),  # Delete view
+    path('search/', views.search, name='search'),  # Search view
+    path('tags/<str:tag_name>/', views.tag_posts, name='tag_posts'),  # Posts by tag
 ]
