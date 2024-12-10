@@ -1,6 +1,25 @@
-{%  load static  %}
+{% extends 'base.html' %}
+
+{% block title %}Profile{% endblock %}
 
 {% block content %}
-<h2>Welcome, {{ user.username }}</h2>
-<p>Email: {{ user.email }}</p>
+<h2>User Profile</h2>
+
+<div class="profile-container">
+    <h3>Welcome, {{ user.username }}!</h3>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    {% if user.first_name or user.last_name %}
+        <p><strong>Full Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+    {% else %}
+        <p><strong>Full Name:</strong> Not provided</p>
+    {% endif %}
+    <p><strong>Date Joined:</strong> {{ user.date_joined|date:"F j, Y" }}</p>
+</div>
+
+<div class="profile-actions">
+    <h4>Actions:</h4>
+    <ul>
+        <li><a href="{% url 'logout' %}">Log Out</a></li>
+    </ul>
+</div>
 {% endblock %}
