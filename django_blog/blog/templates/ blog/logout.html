@@ -1,6 +1,13 @@
-{%  load static %}
+{% extends 'base.html' %}
+
+{% block title %}Logout{% endblock %}
 
 {% block content %}
-<h2>You have been logged out</h2>
-<a href="{% url 'login' %}">Login Again</a>
+<h2>Logout</h2>
+<p>Are you sure you want to log out?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Logout</button>
+</form>
+<p><a href="{% url 'home' %}">Cancel and return to Home</a></p>
 {% endblock %}
