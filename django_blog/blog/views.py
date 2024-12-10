@@ -18,6 +18,9 @@ def register_view(request):
 def profile_view(request):
     return render(request, "profile.html")
 
-def custom_logout_view(request):
-    logout(request)
-    return redirect("home")
+def home(request):
+    return render(request, 'home.html')
+
+def post(request):
+    return render(request, 'post.html')
+    
