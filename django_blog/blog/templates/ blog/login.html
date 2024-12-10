@@ -1,19 +1,13 @@
 {% extends 'base.html' %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Logout{% endblock %}
 
 {% block content %}
-<h2>Login</h2>
+<h2>Logout</h2>
+<p>Are you sure you want to log out?</p>
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
+    <button type="submit">Logout</button>
 </form>
-<p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
-{% if form.errors %}
-    <div class="error-messages">
-        <p>Please fix the errors below:</p>
-        {{ form.errors }}
-    </div>
-{% endif %}
+<p><a href="{% url 'home' %}">Cancel and return to Home</a></p>
 {% endblock %}
