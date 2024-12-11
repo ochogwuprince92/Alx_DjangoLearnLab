@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from .models import Post,Tag
 from .models import Comment
 from django.forms import TextInput, Textarea
+from taggit.forms import TagWidget
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -13,15 +14,10 @@ class CustomUserCreationForm(UserCreationForm):
         fields = ["username", "email", "password1", "password2"]
 
 class PostForm(forms.ModelForm):
-    tags = forms.ModelMultipleChoiceField(queryset=Tag.objects.all(), required=False, widget=forms.CheckboxSelectMultiple)
+    tags =   tags = forms.CharField(widget=TagWidget()) 
     class Meta:
         model = Post
         fields = ['title', 'content', 'tags']
-
-    widgets = {
-        'title': forms.TextInput(attrs={'class': 'form-control'}),
-        'content': forms.Textarea(attrs={'class': 'form-control'}),
-}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
