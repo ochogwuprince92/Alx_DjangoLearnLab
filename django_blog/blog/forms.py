@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from .models import Post,Tag
 from .models import Comment
 from django.forms import TextInput, Textarea
+from django.forms import widgets
 from taggit.forms import TagWidget
 
 class CustomUserCreationForm(UserCreationForm):
