@@ -1,6 +1,16 @@
 from django.urls import path
 from . import views
 from django.contrib.auth.views import LoginView, LogoutView
+from django.urls import path
+from .views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView
+
+urlpatterns = [
+    path('', PostListView.as_view(), name='post_list'),
+    path('<int:pk>/', PostDetailView.as_view(), name='post_detail'),
+    path('new/', PostCreateView.as_view(), name='post_create'),
+    path('<int:pk>/update/', PostUpdateView.as_view(), name='post_update'),
+    path('<int:pk>/delete/', PostDeleteView.as_view(), name='post_delete'),
+]
 
 urlpatterns = [
     path("register/", views.register_view, name="register"),
@@ -10,11 +20,10 @@ urlpatterns = [
     path("home/", views.home, name= "home"),
     path("post/", views.post, name= "posts"),
     
-    path('', views.PostListView.as_view(), name='post_list'),  # Example list view
-    path('post/<int:pk>/', views.PostDetailView.as_view(), name='post_detail'),  # Detail view
-    path('post/new/', views.PostCreateView.as_view(), name='post_create'),  # Create view
-    path('post/<int:pk>/update/', views.PostUpdateView.as_view(), name='post_update'),  # Update view
-    path('post/<int:pk>/delete/', views.PostDeleteView.as_view(), name='post_delete'),  # Delete view
-    path('search/', views.search, name='search'),  # Search view
-    path('tags/<str:tag_name>/', views.tag_posts, name='tag_posts'),  # Posts by tag
+    
+    path('', PostListView.as_view(), name='post_list'),
+    path('<int:pk>/', PostDetailView.as_view(), name='post_detail'),
+    path('new/', PostCreateView.as_view(), name='post_create'),
+    path('<int:pk>/update/', PostUpdateView.as_view(), name='post_update'),
+    path('<int:pk>/delete/', PostDeleteView.as_view(), name='post_delete'),
 ]
