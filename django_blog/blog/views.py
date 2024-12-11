@@ -180,3 +180,13 @@ def delete_comment(request, pk):
         return redirect('post_detail', pk=comment.post.pk)  # Redirect to the post's detail view
     else:
         return HttpResponseForbidden("You are not allowed to delete this comment.")
+    
+class PostByTagListView(ListView):
+    model = Post
+    template_name = 'post_list.html'  
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        tag_slug = self.kwargs.get('tag_slug')
+        tag = Tag.objects.get(slug=tag_slug)
+        return Post.objects.filter(tags=tag)  # Filtering posts by tag
