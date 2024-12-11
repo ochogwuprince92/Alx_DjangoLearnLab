@@ -15,6 +15,10 @@ urlpatterns = [
     path('post/new/', views.PostCreateView.as_view(), name='post_create'),  # Create view
     path('post/<int:pk>/update/', views.PostUpdateView.as_view(), name='post_update'),  # Update view
     path('post/<int:pk>/delete/', views.PostDeleteView.as_view(), name='post_delete'),  # Delete view
-    path('search/', views.search, name='search'),  # Search view
-    path('tags/<str:tag_name>/', views.tag_posts, name='tag_posts'),  # Posts by tag
+    
+
+    path('posts/<int:pk>/', views.PostDetailView.as_view(), name='post_detail'),
+    path('posts/<int:post_id>/comments/new/', views.CommentCreateView.as_view(), name='comment_create'),
+    path('comments/<int:pk>/edit/', views.CommentUpdateView.as_view(), name='comment_edit'),
+    path('comments/<int:pk>/delete/', views.CommentDeleteView.as_view(), name='comment_delete'),
 ]
