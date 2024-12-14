@@ -1,13 +1,14 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import viewsets, generics, status
-from .models import Post, Comment, Like
-from .serializers import PostSerializer, CommentSerializer
+from rest_framework import generics, viewsets, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from .models import Post, Comment, Like
+from .serializers import PostSerializer, CommentSerializer
 from notifications.models import Notification
 from django.contrib.contenttypes.models import ContentType
 
+# Post ViewSet
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
@@ -16,6 +17,7 @@ class PostViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
+# Comment ViewSet
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
@@ -25,6 +27,7 @@ class CommentViewSet(viewsets.ModelViewSet):
         post = Post.objects.get(id=self.request.data['post'])
         serializer.save(author=self.request.user, post=post)
 
+# Feed View: Get posts from users that the current user follows
 class FeedView(generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
 
@@ -39,6 +42,7 @@ class FeedView(generics.GenericAPIView):
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
 
+# Like a Post View: Handle liking a post and generating notifications
 class LikePostView(generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
 
@@ -65,6 +69,7 @@ class LikePostView(generics.GenericAPIView):
 
         return Response({"detail": "Post liked successfully."}, status=status.HTTP_200_OK)
 
+# Unlike a Post View: Handle unliking a post and generating notifications
 class UnlikePostView(generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
 
@@ -89,5 +94,3 @@ class UnlikePostView(generics.GenericAPIView):
         )
 
         return Response({"detail": "Post unliked successfully."}, status=status.HTTP_200_OK)
-
-# Create your views here.
