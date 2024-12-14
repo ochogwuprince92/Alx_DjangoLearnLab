@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from .models import Post, Comment
 from .serializers import PostSerializer, CommentSerializer
 from rest_framework.permissions import IsAuthenticated
@@ -23,7 +23,7 @@ class CommentViewSet(viewsets.ModelViewSet):
         post = Post.objects.get(id=self.request.data['post'])
         serializer.save(author=self.request.user, post=post)
 
-class FeedView(APIView):
+class FeedView(generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):

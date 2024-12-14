@@ -8,5 +8,5 @@ router.register('comments', CommentViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),  # Automatically map all CRUD operations for posts and comments
-     path('feed/', FeedView.as_view(), name='feed'),
+    path('feed/', FeedView.as_view(), name='feed'),
 ]

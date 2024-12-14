@@ -5,8 +5,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from django.shortcuts import get_object_or_404
-from .models import User
-from rest_framework import status
+from .models import User, CustomUser
+from rest_framework import status, generics
 
 
 class CustomAuthToken(ObtainAuthToken):
@@ -45,11 +45,11 @@ class UserProfileView(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=400)
 
-class FollowUserView(APIView):
+class FollowUserView(generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, user_id):
-        user_to_follow = get_object_or_404(User, id=user_id)
+        user_to_follow = get_object_or_404(CustomUser, id=user_id)
         user = request.user
 
         if user == user_to_follow:
@@ -58,11 +58,11 @@ class FollowUserView(APIView):
         user.following.add(user_to_follow)
         return Response({"detail": f"Now following {user_to_follow.username}"}, status=status.HTTP_200_OK)
 
-class UnfollowUserView(APIView):
+class UnfollowUserView(generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, user_id):
-        user_to_unfollow = get_object_or_404(User, id=user_id)
+        user_to_unfollow = get_object_or_404(CustomUser, id=user_id)
         user = request.user
 
         if user == user_to_unfollow:
@@ -70,4 +70,3 @@ class UnfollowUserView(APIView):
 
         user.following.remove(user_to_unfollow)
         return Response({"detail": f"Unfollowed {user_to_unfollow.username}"}, status=status.HTTP_200_OK)
-# Create your views here.
