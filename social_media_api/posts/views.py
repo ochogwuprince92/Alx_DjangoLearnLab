@@ -1,10 +1,12 @@
-from django.shortcuts import render
-from rest_framework import viewsets, generics
-from .models import Post, Comment
+from django.shortcuts import get_object_or_404
+from rest_framework import viewsets, generics, status
+from .models import Post, Comment, Like
 from .serializers import PostSerializer, CommentSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from notifications.models import Notification
+from django.contrib.contenttypes.models import ContentType
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
@@ -36,4 +38,56 @@ class FeedView(generics.GenericAPIView):
         # Serialize the posts
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
+
+class LikePostView(generics.GenericAPIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, pk):
+        post = get_object_or_404(Post, pk=pk)
+        user = request.user
+
+        # Check if the user already liked the post
+        if Like.objects.filter(user=user, post=post).exists():
+            return Response({"detail": "You have already liked this post."}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Create the Like instance
+        Like.objects.create(user=user, post=post)
+
+        # Create a notification for the post author
+        Notification.objects.create(
+            recipient=post.author,
+            actor=user,
+            verb="liked your post",
+            target=post,
+            target_content_type=ContentType.objects.get_for_model(Post),
+            target_object_id=post.id
+        )
+
+        return Response({"detail": "Post liked successfully."}, status=status.HTTP_200_OK)
+
+class UnlikePostView(generics.GenericAPIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, pk):
+        post = get_object_or_404(Post, pk=pk)
+        user = request.user
+
+        # Check if the user has liked the post
+        like = get_object_or_404(Like, user=user, post=post)
+
+        # Remove the like
+        like.delete()
+
+        # Create a notification for the post author
+        Notification.objects.create(
+            recipient=post.author,
+            actor=user,
+            verb="unliked your post",
+            target=post,
+            target_content_type=ContentType.objects.get_for_model(Post),
+            target_object_id=post.id
+        )
+
+        return Response({"detail": "Post unliked successfully."}, status=status.HTTP_200_OK)
+
 # Create your views here.
