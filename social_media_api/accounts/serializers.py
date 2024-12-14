@@ -6,18 +6,18 @@ from rest_framework.authtoken.models import Token
 User = get_user_model()
 
 class CustomUserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)  # Use CharField explicitly for password
+    password = serializers.CharField(write_only=True, required=True)  # Use CharField explicitly for password
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'password', 'bio', 'profile_picture', 'followers']
+        fields = ['id', 'username', 'email', 'password', 'bio', 'profile_picture']
 
     def create(self, validated_data):
         """
         Create a new user instance with a hashed password
         """
         # Use create_user to handle password hashing
-        user = User.objects.create_user(
+        user = get_user_model().objects.create_user(
             username=validated_data['username'],
             email=validated_data.get('email'),
             password=validated_data['password']
