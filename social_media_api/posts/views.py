@@ -10,7 +10,7 @@ from rest_framework.views import APIView
 
 # Like a Post View: Handle liking a post and generating notifications
 class LikePostView(generics.GenericAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, pk):
         post = get_object_or_404(Post, pk=pk)
@@ -36,7 +36,7 @@ class LikePostView(generics.GenericAPIView):
 
 # Unlike a Post View: Handle unliking a post and generating notifications
 class UnlikePostView(generics.GenericAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, pk):
         post = get_object_or_404(Post, pk=pk)

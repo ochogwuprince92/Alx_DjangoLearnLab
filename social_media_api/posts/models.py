@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.db.models import Q
+from accounts.models import CustomUser
 
 User = get_user_model()
 
@@ -12,12 +13,9 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 class Like(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='likes')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='likes')
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ['user', 'post']  # Ensure a user can like a post only once
-
-    def __str__(self):
-        return f'{self.user} likes {self.post}'
+        unique_together = ('user', 'post')  # Prevent duplicate likes
