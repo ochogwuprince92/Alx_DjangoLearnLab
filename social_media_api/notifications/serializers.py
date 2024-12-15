@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from .models import Notification
 from django.contrib.auth import get_user_model
-from rest_framework.relations import HyperlinkedIdentityField
 
 class NotificationSerializer(serializers.ModelSerializer):
     actor = serializers.StringRelatedField()  # Actor is the user who performed the action
