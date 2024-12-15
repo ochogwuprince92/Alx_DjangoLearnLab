@@ -7,6 +7,7 @@ from notifications.models import Notification
 from django.contrib.contenttypes.models import ContentType
 from accounts.models import CustomUser
 from rest_framework.views import APIView
+from rest_framework.generics import get_object_or_404
 
 # Like a Post View: Handle liking a post and generating notifications
 class LikePostView(generics.GenericAPIView):
