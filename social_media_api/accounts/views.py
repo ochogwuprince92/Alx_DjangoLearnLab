@@ -1,11 +1,11 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import CustomUserSerializer
-from rest_framework.permissions import IsAuthenticated
+from rest_framework import permissions
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from django.shortcuts import get_object_or_404
-from .models import User, CustomUser
+from .models import CustomUser
 from rest_framework import status
 from rest_framework import generics
 
@@ -32,7 +32,7 @@ class RegisterUserView(APIView):
 
 
 class UserProfileView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
         serializer = CustomUserSerializer(request.user)
@@ -46,7 +46,7 @@ class UserProfileView(APIView):
         return Response(serializer.errors, status=400)
 
 class FollowUserView(generics.GenericAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, user_id):
         user_to_follow = get_object_or_404(CustomUser, id=user_id)
@@ -60,7 +60,7 @@ class FollowUserView(generics.GenericAPIView):
 
 # Follow User View: Allows users to follow another user
 class FollowUserView(generics.GenericAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, user_id):
         # Fetching the user to follow using get_object_or_404 to ensure the user exists
@@ -77,7 +77,7 @@ class FollowUserView(generics.GenericAPIView):
 
 # Unfollow User View: Allows users to unfollow another user
 class UnfollowUserView(generics.GenericAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, user_id):
         # Fetching the user to unfollow
@@ -94,7 +94,7 @@ class UnfollowUserView(generics.GenericAPIView):
 
 # List of all users view: Returns a list of all users in the system (can be used to view users to follow)
 class UserListView(generics.GenericAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
         # Get all users (excluding the current user to avoid following oneself)
