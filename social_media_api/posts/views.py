@@ -10,30 +10,22 @@ from rest_framework.views import APIView
 from rest_framework.generics import get_object_or_404
 
 # Like a Post View: Handle liking a post and generating notifications
-class LikePostView(generics.GenericAPIView):
+class LikePostView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, pk):
+        # Retrieve the post object
         post = get_object_or_404(Post, pk=pk)
-        user = request.user
 
-        # Use get_or_create to ensure a like is created only once for each user and post
-        like, created = Like.objects.get_or_create(user=user, post=post)
+        # Create or retrieve the like object
+        like, created = Like.objects.get_or_create(user=request.user, post=post)
 
-        if not created:
-            return Response({"detail": "You have already liked this post."}, status=status.HTTP_400_BAD_REQUEST)
-
-        # Create a notification for the post author
-        Notification.objects.create(
-            recipient=post.author,
-            actor=user,
-            verb="liked your post",
-            target=post,
-            target_content_type=ContentType.objects.get_for_model(Post),
-            target_object_id=post.id
-        )
-
-        return Response({"detail": "Post liked successfully."}, status=status.HTTP_200_OK)
+        if created:
+            # New like created
+            return Response({'message': 'Post liked successfully.'}, status=status.HTTP_201_CREATED)
+        else:
+            # Like already exists
+            return Response({'message': 'Post is already liked.'}, status=status.HTTP_200_OK)
 
 # Unlike a Post View: Handle unliking a post and generating notifications
 class UnlikePostView(generics.GenericAPIView):
