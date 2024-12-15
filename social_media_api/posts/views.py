@@ -1,11 +1,12 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework import permissions, IsAuthenticated
 from rest_framework.response import Response
 from .models import Post, Like
-from .serializers import PostSerializer
 from notifications.models import Notification
 from django.contrib.contenttypes.models import ContentType
+from accounts.models import CustomUser
+from rest_framework.views import APIView
 
 # Like a Post View: Handle liking a post and generating notifications
 class LikePostView(generics.GenericAPIView):
@@ -58,3 +59,18 @@ class UnlikePostView(generics.GenericAPIView):
         )
 
         return Response({"detail": "Post unliked successfully."}, status=status.HTTP_200_OK)
+class FeedView(APIView):
+    permission_classes = [permissions.IsAuthenticated]  # Enforcing authentication
+
+    def get(self, request):
+        # Get the authenticated user's following list
+        following_users = request.user.following.all()
+
+        # Filter posts by authors in the following list
+        posts = Post.objects.filter(author__in=following_users).order_by('-created_at')
+
+        # Serialize the posts (assuming a PostSerializer exists)
+        from posts.serializers import PostSerializer
+        serializer = PostSerializer(posts, many=True)
+
+        return Response(serializer.data)
